@@ -1,5 +1,5 @@
-function hi(param: string): void {
-  console.log(param);
-}
+import Server from './server';
 
-hi('test');
+const server = new Server();
+
+server.start();
