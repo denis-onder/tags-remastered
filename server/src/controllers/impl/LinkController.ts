@@ -1,4 +1,4 @@
-import { Response, Router } from 'express';
+import { NextFunction, Response, Router } from 'express';
 import AuthorizedRequest from 'src/domain/AuthorizedRequest';
 import Link from 'src/domain/Link';
 import LinkService from 'src/services/impl/LinkService';
@@ -16,48 +16,93 @@ export default class LinkController implements BaseController {
     this.router.delete('/:id', this.delete);
   }
 
-  async create(request: AuthorizedRequest, response: Response): Promise<void> {
-    const data: Link = request.body;
+  async create(
+    request: AuthorizedRequest,
+    response: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const data: Link = request.body;
 
-    const link = await this.linkService.create(data);
+      const link = await this.linkService.create(data);
 
-    response.status(200).json(link);
+      response.status(200).json(link);
+    } catch (error) {
+      next(error);
+    }
   }
-  async find(request: AuthorizedRequest, response: Response): Promise<void> {
-    const query = this.formQuery(request);
-    const links: Array<Link> = await this.linkService.find(query);
+  async find(
+    request: AuthorizedRequest,
+    response: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const query = this.formQuery(request);
+      const links: Array<Link> = await this.linkService.find(query);
 
-    response.status(200).json(links);
+      response.status(200).json(links);
+    } catch (error) {
+      next(error);
+    }
   }
-  async findOne(request: AuthorizedRequest, response: Response): Promise<void> {
-    const query = this.formQuery(request);
-    const link: Link = await this.linkService.findOne(query);
+  async findOne(
+    request: AuthorizedRequest,
+    response: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const query = this.formQuery(request);
+      const link: Link = await this.linkService.findOne(query);
 
-    response.status(200).json(link);
+      response.status(200).json(link);
+    } catch (error) {
+      next(error);
+    }
   }
   async findById(
     request: AuthorizedRequest,
-    response: Response
+    response: Response,
+    next: NextFunction
   ): Promise<void> {
-    const id = request.params.id;
-    const link: Link = await this.linkService.findById(id);
+    try {
+      const id = request.params.id;
+      const link: Link = await this.linkService.findById(id);
 
-    response.status(200).json(link);
+      response.status(200).json(link);
+    } catch (error) {
+      next(error);
+    }
   }
-  async update(request: AuthorizedRequest, response: Response): Promise<void> {
-    const id = request.params.id;
-    const data: Partial<Link> = request.body;
+  async update(
+    request: AuthorizedRequest,
+    response: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const id = request.params.id;
+      const data: Partial<Link> = request.body;
 
-    const updatedLink: Link = await this.linkService.update(id, data);
+      const updatedLink: Link = await this.linkService.update(id, data);
 
-    response.status(200).json(updatedLink);
+      response.status(200).json(updatedLink);
+    } catch (error) {
+      next(error);
+    }
   }
-  async delete(request: AuthorizedRequest, response: Response): Promise<void> {
-    const id = request.params.id;
+  async delete(
+    request: AuthorizedRequest,
+    response: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const id = request.params.id;
 
-    await this.linkService.delete(id);
+      await this.linkService.delete(id);
 
-    response.status(204);
+      response.status(204);
+    } catch (error) {
+      next(error);
+    }
   }
 
   private formQuery(request: AuthorizedRequest): { [key: string]: any } {
