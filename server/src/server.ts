@@ -4,6 +4,7 @@ import AuthController from './controllers/impl/AuthController';
 import LinkController from './controllers/impl/LinkController';
 import authMiddleware from './middleware/authMiddleware';
 import globalErrorHandler from './middleware/globalErrorHandler';
+import logger from './middleware/logger';
 import AuthService from './services/impl/AuthService';
 import LinkService from './services/impl/LinkService';
 import UserService from './services/impl/UserService';
@@ -31,9 +32,14 @@ export default class Server {
   }
 
   public start() {
+    if (process.env.NODE_ENV === 'development') {
+      // Apply the logger middleware
+      this.application.use(logger);
+    }
+
     this.buildControllers();
 
-    // Implement the global error handler
+    // Apply the global error handler
     this.application.use(globalErrorHandler);
 
     this.application.listen(config.port, () => {

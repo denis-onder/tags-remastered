@@ -5,7 +5,8 @@ export default function (
   error: RequestError,
   _: Request,
   res: Response,
-  __: NextFunction
+  next: NextFunction
 ) {
   res.status(error.status).send(error.message);
+  next();
 }
