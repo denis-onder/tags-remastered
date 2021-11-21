@@ -1,7 +1,7 @@
 import argon2 from 'argon2';
 import User from '../../domain/User';
 import UserService from './UserService';
-import RequestError from '../../utils/ReqeustError';
+import RequestError from '../../utils/RequestError';
 import { generateToken } from '../../utils/jwt';
 
 export default class AuthService {

@@ -1,11 +1,20 @@
-import { Response } from 'express';
+import { Response, Router } from 'express';
 import AuthorizedRequest from 'src/domain/AuthorizedRequest';
 import Link from 'src/domain/Link';
 import LinkService from 'src/services/impl/LinkService';
 import BaseController from '../BaseController';
 
 export default class LinkController implements BaseController {
-  constructor(private linkService: LinkService) {}
+  public router: Router;
+  constructor(private linkService: LinkService) {
+    this.router = Router();
+
+    this.router.post('/', this.create);
+    this.router.get('/', this.find);
+    this.router.get('/:id', this.findById);
+    this.router.put('/:id', this.update);
+    this.router.delete('/:id', this.delete);
+  }
 
   async create(request: AuthorizedRequest, response: Response): Promise<void> {
     const data: Link = request.body;
@@ -30,13 +39,13 @@ export default class LinkController implements BaseController {
     request: AuthorizedRequest,
     response: Response
   ): Promise<void> {
-    const id = Number(request.params.id);
+    const id = request.params.id;
     const link: Link = await this.linkService.findById(id);
 
     response.status(200).json(link);
   }
   async update(request: AuthorizedRequest, response: Response): Promise<void> {
-    const id = Number(request.params.id);
+    const id = request.params.id;
     const data: Partial<Link> = request.body;
 
     const updatedLink: Link = await this.linkService.update(id, data);
@@ -44,7 +53,7 @@ export default class LinkController implements BaseController {
     response.status(200).json(updatedLink);
   }
   async delete(request: AuthorizedRequest, response: Response): Promise<void> {
-    const id = Number(request.params.id);
+    const id = request.params.id;
 
     await this.linkService.delete(id);
 
@@ -54,7 +63,7 @@ export default class LinkController implements BaseController {
   private formQuery(request: AuthorizedRequest): { [key: string]: any } {
     const { url, tags } = request.query;
     const query: { [key: string]: any } = {
-      user: request.user?.id as number,
+      user: request.user?.id as string,
     };
 
     if (url) {

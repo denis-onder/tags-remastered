@@ -11,13 +11,13 @@ export default class UserService implements BaseService<User> {
   findOne(query: { [key: string]: any }): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  findById(id: number): Promise<User> {
+  findById(id: string): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  update(id: number, data: Partial<User>): Promise<User> {
+  update(id: string, data: Partial<User>): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  delete(id: number): Promise<boolean> {
+  delete(id: string): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
 }
