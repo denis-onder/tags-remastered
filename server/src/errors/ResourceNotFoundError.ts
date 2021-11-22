@@ -1,4 +1,6 @@
-export default class ResourceNotFoundError {
+import IBaseError from './IBaseError';
+
+export default class ResourceNotFoundError implements IBaseError {
   public status: number;
 
   public message: string;

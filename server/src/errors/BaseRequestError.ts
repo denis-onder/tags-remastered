@@ -1,4 +1,6 @@
-export default class RequestError {
+import IBaseError from './IBaseError';
+
+export default class BaseRequestError implements IBaseError {
   public status: number;
 
   public message: string;

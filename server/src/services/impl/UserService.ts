@@ -2,12 +2,13 @@ import ResourceNotFoundError from '../../errors/ResourceNotFoundError';
 import UserModel from '../../db/models/UserModel';
 import User from '../../domain/User';
 import BaseService from '../BaseService';
-import RequestError from '../../errors/RequestError';
+import BadRequestError from '../../errors/BadRequestError';
+import userValidator from '../../validators/user';
 
 export default class UserService implements BaseService<User> {
   async create(data: User): Promise<User> {
     try {
-      // Validate the user prior to creation and throw error if any
+      userValidator(data);
       return await new UserModel(data).save();
     } catch (error) {
       throw error;
@@ -55,7 +56,7 @@ export default class UserService implements BaseService<User> {
       const result = await UserModel.findByIdAndUpdate(id, data);
 
       if (!result) {
-        throw new RequestError(400, 'Invalid request. Please try again.');
+        throw new BadRequestError('Invalid request. Please try again.');
       }
 
       return result;

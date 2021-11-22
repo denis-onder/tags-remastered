@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import RequestError from '../errors/RequestError';
+import IBaseError from '../errors/IBaseError';
 
 export default (
-  error: RequestError,
+  error: IBaseError,
   _: Request,
   res: Response,
   next: NextFunction

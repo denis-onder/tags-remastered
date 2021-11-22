@@ -17,5 +17,8 @@ module.exports = {
     'no-useless-catch': 'off',
     'no-useless-constructor': 'off',
     'comma-dangle': 'off',
+    'operator-linebreak': 'off',
+    'no-throw-literal': 'off',
+    semi: 'off',
   },
 };

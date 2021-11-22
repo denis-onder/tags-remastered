@@ -2,11 +2,11 @@ import { Response, NextFunction } from 'express';
 import { decodeToken } from '../utils/jwt';
 import AuthorizedRequest from '../domain/AuthorizedRequest';
 
-export default async function (
+export default async (
   req: AuthorizedRequest,
   res: Response,
   next: NextFunction
-) {
+) => {
   const token: string = (req.headers.authorization || '').replace('Bearer', '');
   const userId = decodeToken(token);
 
@@ -17,4 +17,4 @@ export default async function (
     // req.user = await UserModel.findById(userId);
     next();
   }
-}
+};
