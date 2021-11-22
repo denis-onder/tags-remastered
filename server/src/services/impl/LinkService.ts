@@ -1,28 +1,81 @@
 import Link from '../../domain/Link';
 import IBaseService from '../IBaseService';
+import linkValidator from '../../validators/link';
+import LinkModel from '../../db/models/LinkModel';
+import ResourceNotFoundError from '../../errors/impl/ResourceNotFoundError';
+import BadRequestError from '../../errors/impl/BadRequestError';
 
 export default class LinkService implements IBaseService<Link> {
-  create(data: Link): Promise<Link> {
-    throw new Error('Method not implemented.');
+  async create(data: Link): Promise<Link> {
+    try {
+      linkValidator(data);
+      return await new LinkModel(data).save();
+    } catch (error) {
+      throw error;
+    }
   }
 
-  find(query: { [key: string]: any }): Promise<Link[]> {
-    throw new Error('Method not implemented.');
+  async find(query: { [key: string]: any }): Promise<Link[]> {
+    try {
+      return await LinkModel.find(query);
+    } catch (error) {
+      throw error;
+    }
   }
 
-  findOne(query: { [key: string]: any }): Promise<Link> {
-    throw new Error('Method not implemented.');
+  async findOne(query: { [key: string]: any }): Promise<Link> {
+    try {
+      const link: Link = (await LinkModel.findOne(query)) as Link;
+
+      if (!link) {
+        throw new ResourceNotFoundError();
+      }
+
+      return link;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  findById(id: string): Promise<Link> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Link> {
+    try {
+      const link: Link = (await LinkModel.findById(id)) as Link;
+
+      if (!link) {
+        throw new ResourceNotFoundError();
+      }
+
+      return link;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  update(id: string, data: Partial<Link>): Promise<Link> {
-    throw new Error('Method not implemented.');
+  async update(id: string, data: Partial<Link>): Promise<Link> {
+    try {
+      const result = await LinkModel.findByIdAndUpdate(id, data);
+
+      if (!result) {
+        throw new BadRequestError('Invalid request. Please try again.');
+      }
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  delete(id: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<boolean> {
+    try {
+      const result = await LinkModel.findByIdAndDelete(id);
+
+      if (!result) {
+        throw new ResourceNotFoundError();
+      }
+
+      return Boolean(result);
+    } catch (error) {
+      throw error;
+    }
   }
 }
