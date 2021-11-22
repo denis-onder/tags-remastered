@@ -10,23 +10,32 @@ export default async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const token: string = (req.headers.authorization || '').replace('Bearer', '');
-  const userId = decodeToken(token);
+  try {
+    const token: string = (req.headers.authorization || '').replace(
+      'Bearer',
+      ''
+    );
 
-  const error = new UnauthorizedError();
+    if (!token) {
+      throw new UnauthorizedError();
+    }
 
-  if (!token || !userId) {
-    res.status(error.status).send(error.message);
-    return;
-  }
+    const userId = decodeToken(token);
 
-  // Find the user and set it as `req.user`
-  const user: User = (await UserModel.findById(userId)) as User;
+    if (!userId) {
+      throw new UnauthorizedError();
+    }
 
-  if (user) {
-    req.user = user;
-    next();
-  } else {
+    // Find the user and set it as `req.user`
+    const user: User = (await UserModel.findById(userId)) as User;
+
+    if (user) {
+      req.user = user;
+      next();
+    } else {
+      throw new UnauthorizedError();
+    }
+  } catch (error: any) {
     res.status(error.status).send(error.message);
   }
 };

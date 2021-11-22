@@ -12,10 +12,6 @@ const decodeToken = (token: string): string | null => {
   let payload: string | null = null;
 
   jsonwebtoken.verify(token, config.secret, (error, decoded) => {
-    if (error) {
-      return;
-    }
-
     if (decoded) {
       payload = decoded.id;
     }
