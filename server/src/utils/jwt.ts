@@ -1,6 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken';
 import config from '../config';
 
+// eslint-disable-next-line arrow-body-style
 const generateToken = (id: string): string => {
   return jsonwebtoken.sign({ id }, config.secret, {
     expiresIn: '1h',

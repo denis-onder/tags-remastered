@@ -1,7 +1,7 @@
 import { NextFunction, Response, Router } from 'express';
-import AuthorizedRequest from 'src/domain/AuthorizedRequest';
-import Link from 'src/domain/Link';
-import LinkService from 'src/services/impl/LinkService';
+import AuthorizedRequest from '../../domain/AuthorizedRequest';
+import Link from '../../domain/Link';
+import LinkService from '../../services/impl/LinkService';
 import IBaseController from '../IBaseController';
 
 export default class LinkController implements IBaseController {
@@ -11,111 +11,111 @@ export default class LinkController implements IBaseController {
   constructor(private linkService: LinkService) {
     this.router = Router();
 
-    this.router.post('/', this.create);
-    this.router.get('/', this.find);
-    this.router.get('/:id', this.findById);
-    this.router.put('/:id', this.update);
-    this.router.delete('/:id', this.delete);
+    this.router.post('/', (req, res, next) => this.create(req, res, next));
+    this.router.get('/', (req, res, next) => this.find(req, res, next));
+    this.router.get('/:id', (req, res, next) => this.findById(req, res, next));
+    this.router.put('/:id', (req, res, next) => this.update(req, res, next));
+    this.router.delete('/:id', (req, res, next) => this.delete(req, res, next));
   }
 
   async create(
-    request: AuthorizedRequest,
-    response: Response,
+    req: AuthorizedRequest,
+    res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const data: Link = request.body;
+      const data: Link = req.body;
 
       const link = await this.linkService.create(data);
 
-      response.status(200).json(link);
+      res.status(200).json(link);
     } catch (error) {
       next(error);
     }
   }
 
   async find(
-    request: AuthorizedRequest,
-    response: Response,
+    req: AuthorizedRequest,
+    res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const query = this.formQuery(request);
+      const query = this.formQuery(req);
       const links: Array<Link> = await this.linkService.find(query);
 
-      response.status(200).json(links);
+      res.status(200).json(links);
     } catch (error) {
       next(error);
     }
   }
 
   async findOne(
-    request: AuthorizedRequest,
-    response: Response,
+    req: AuthorizedRequest,
+    res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const query = this.formQuery(request);
+      const query = this.formQuery(req);
       const link: Link = await this.linkService.findOne(query);
 
-      response.status(200).json(link);
+      res.status(200).json(link);
     } catch (error) {
       next(error);
     }
   }
 
   async findById(
-    request: AuthorizedRequest,
-    response: Response,
+    req: AuthorizedRequest,
+    res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const { id } = request.params;
+      const { id } = req.params;
       const link: Link = await this.linkService.findById(id);
 
-      response.status(200).json(link);
+      res.status(200).json(link);
     } catch (error) {
       next(error);
     }
   }
 
   async update(
-    request: AuthorizedRequest,
-    response: Response,
+    req: AuthorizedRequest,
+    res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const { id } = request.params;
-      const data: Partial<Link> = request.body;
+      const { id } = req.params;
+      const data: Partial<Link> = req.body;
 
       const updatedLink: Link = await this.linkService.update(id, data);
 
-      response.status(200).json(updatedLink);
+      res.status(200).json(updatedLink);
     } catch (error) {
       next(error);
     }
   }
 
   async delete(
-    request: AuthorizedRequest,
-    response: Response,
+    req: AuthorizedRequest,
+    res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const { id } = request.params;
+      const { id } = req.params;
 
       await this.linkService.delete(id);
 
-      response.status(204);
+      res.status(204);
     } catch (error) {
       next(error);
     }
   }
 
-  private formQuery(request: AuthorizedRequest): { [key: string]: any } {
-    const { url, tags } = request.query;
+  private formQuery(req: AuthorizedRequest): { [key: string]: any } {
+    const { url, tags } = req.query;
     const query: { [key: string]: any } = {
-      user: request.user?.id as string,
+      user: req.user?._id as string,
     };
 
     if (url) {

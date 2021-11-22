@@ -3,13 +3,10 @@ import { model, Schema } from 'mongoose';
 import User from '../../domain/User';
 
 const schema: Schema<User> = new Schema({
-  id: {
-    type: Schema.Types.ObjectId,
-    required: true,
-  },
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   displayName: {
     type: String,

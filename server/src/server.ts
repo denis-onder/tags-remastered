@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import config from './config';
 import AuthController from './controllers/impl/AuthController';
 import LinkController from './controllers/impl/LinkController';
@@ -39,12 +40,14 @@ export default class Server {
       this.application.use(logger);
     }
 
+    this.application.use(bodyParser.urlencoded());
+    this.application.use(bodyParser.json());
+    this.application.use(cors());
+
     this.buildControllers();
 
     // Apply the global error handler
     this.application.use(globalErrorHandler);
-
-    this.application.use(cors());
 
     databaseConnection().then((connected) => {
       if (!connected) process.exit(1);
