@@ -25,6 +25,7 @@ export default class LinkController implements IBaseController {
   ): Promise<void> {
     try {
       const data: Link = req.body;
+      data.user = req.user?._id as string;
 
       const link = await this.linkService.create(data);
 

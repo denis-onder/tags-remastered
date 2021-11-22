@@ -17,7 +17,13 @@ export default class LinkService implements IBaseService<Link> {
 
   async find(query: { [key: string]: any }): Promise<Link[]> {
     try {
-      return await LinkModel.find(query);
+      const payload: Array<Link> = await LinkModel.find(query);
+
+      if (!payload || payload.length === 0) {
+        throw new ResourceNotFoundError();
+      }
+
+      return payload;
     } catch (error) {
       throw error;
     }
