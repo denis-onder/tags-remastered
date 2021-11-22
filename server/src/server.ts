@@ -1,4 +1,5 @@
 import express, { Application } from 'express';
+import cors from 'cors';
 import config from './config';
 import AuthController from './controllers/impl/AuthController';
 import LinkController from './controllers/impl/LinkController';
@@ -8,6 +9,7 @@ import logger from './middleware/logger';
 import AuthService from './services/impl/AuthService';
 import LinkService from './services/impl/LinkService';
 import UserService from './services/impl/UserService';
+import databaseConnection from './db';
 
 export default class Server {
   private application: Application;
@@ -42,8 +44,18 @@ export default class Server {
     // Apply the global error handler
     this.application.use(globalErrorHandler);
 
-    this.application.listen(config.port, () => {
-      console.log(`Server running!\nhttp://localhost:${config.port}`);
+    this.application.use(cors());
+
+    databaseConnection().then((connected) => {
+      if (!connected) process.exit(1);
+
+      // eslint-disable-next-line no-console
+      console.log('Database connection established!');
+
+      this.application.listen(config.port, () => {
+        // eslint-disable-next-line no-console
+        console.log(`Server running!\nhttp://localhost:${config.port}`);
+      });
     });
   }
 }

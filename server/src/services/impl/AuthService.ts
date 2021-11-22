@@ -20,6 +20,6 @@ export default class AuthService {
       throw new RequestError(403, 'Your password is incorrect.');
     }
 
-    return generateToken(user.id);
+    return generateToken(user.id as string);
   }
 }
