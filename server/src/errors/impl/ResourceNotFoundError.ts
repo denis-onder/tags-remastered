@@ -1,4 +1,4 @@
-import IBaseError from './IBaseError';
+import IBaseError from '../IBaseError';
 
 export default class ResourceNotFoundError implements IBaseError {
   public status: number;

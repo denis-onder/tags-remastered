@@ -1,4 +1,4 @@
-import IBaseError from './IBaseError';
+import IBaseError from '../IBaseError';
 
 export default class ForbiddenError implements IBaseError {
   public status: number = 403;
