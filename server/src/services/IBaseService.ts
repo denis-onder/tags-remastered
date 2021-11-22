@@ -1,4 +1,5 @@
-export default interface BaseService<T> {
+/* eslint-disable no-unused-vars */
+export default interface IBaseService<T> {
   create(data: T): Promise<T>;
   find(query: { [key: string]: any }): Promise<Array<T>>;
   findOne(query: { [key: string]: any }): Promise<T>;

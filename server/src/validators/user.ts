@@ -1,4 +1,4 @@
-import BadRequestError from '../errors/BadRequestError';
+import BadRequestError from '../errors/impl/BadRequestError';
 import User from '../domain/User';
 
 export default (user: User): void => {

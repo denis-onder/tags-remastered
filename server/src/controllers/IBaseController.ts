@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { NextFunction, Request, Response } from 'express';
 
-export default interface BaseController {
+export default interface IBaseController {
   create(
     request: Request,
     response: Response,

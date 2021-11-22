@@ -19,6 +19,7 @@ module.exports = {
     'comma-dangle': 'off',
     'operator-linebreak': 'off',
     'no-throw-literal': 'off',
+    'object-curly-newline': 'off',
     semi: 'off',
   },
 };

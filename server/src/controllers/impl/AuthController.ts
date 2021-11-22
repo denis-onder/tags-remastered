@@ -5,6 +5,7 @@ import User from '../../domain/User';
 export default class AuthController {
   public router: Router;
 
+  // eslint-disable-next-line no-unused-vars, no-empty-function
   constructor(private authService: AuthService) {
     this.router = Router();
     this.router.post('/register', this.register);

@@ -2,7 +2,7 @@ import argon2 from 'argon2';
 import User from '../../domain/User';
 import UserService from './UserService';
 import { generateToken } from '../../utils/jwt';
-import BadRequestError from '../../errors/BadRequestError';
+import BadRequestError from '../../errors/impl/BadRequestError';
 
 export default class AuthService {
   // eslint-disable-next-line no-unused-vars, no-empty-function

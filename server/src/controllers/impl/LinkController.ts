@@ -2,10 +2,12 @@ import { NextFunction, Response, Router } from 'express';
 import AuthorizedRequest from 'src/domain/AuthorizedRequest';
 import Link from 'src/domain/Link';
 import LinkService from 'src/services/impl/LinkService';
-import BaseController from '../BaseController';
+import IBaseController from '../IBaseController';
 
-export default class LinkController implements BaseController {
+export default class LinkController implements IBaseController {
   public router: Router;
+
+  // eslint-disable-next-line no-unused-vars, no-empty-function
   constructor(private linkService: LinkService) {
     this.router = Router();
 
@@ -31,6 +33,7 @@ export default class LinkController implements BaseController {
       next(error);
     }
   }
+
   async find(
     request: AuthorizedRequest,
     response: Response,
@@ -45,6 +48,7 @@ export default class LinkController implements BaseController {
       next(error);
     }
   }
+
   async findOne(
     request: AuthorizedRequest,
     response: Response,
@@ -59,13 +63,14 @@ export default class LinkController implements BaseController {
       next(error);
     }
   }
+
   async findById(
     request: AuthorizedRequest,
     response: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const id = request.params.id;
+      const { id } = request.params;
       const link: Link = await this.linkService.findById(id);
 
       response.status(200).json(link);
@@ -73,13 +78,14 @@ export default class LinkController implements BaseController {
       next(error);
     }
   }
+
   async update(
     request: AuthorizedRequest,
     response: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const id = request.params.id;
+      const { id } = request.params;
       const data: Partial<Link> = request.body;
 
       const updatedLink: Link = await this.linkService.update(id, data);
@@ -89,13 +95,14 @@ export default class LinkController implements BaseController {
       next(error);
     }
   }
+
   async delete(
     request: AuthorizedRequest,
     response: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const id = request.params.id;
+      const { id } = request.params;
 
       await this.linkService.delete(id);
 

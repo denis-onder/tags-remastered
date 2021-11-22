@@ -1,5 +1,5 @@
-import Link from '../../domain/Link';
 import { model, Schema } from 'mongoose';
+import Link from '../../domain/Link';
 
 const schema: Schema<Link> = new Schema({
   id: {

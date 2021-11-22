@@ -1,11 +1,11 @@
-import ResourceNotFoundError from '../../errors/ResourceNotFoundError';
+import ResourceNotFoundError from '../../errors/impl/ResourceNotFoundError';
 import UserModel from '../../db/models/UserModel';
 import User from '../../domain/User';
-import BaseService from '../BaseService';
-import BadRequestError from '../../errors/BadRequestError';
+import IBaseService from '../IBaseService';
+import BadRequestError from '../../errors/impl/BadRequestError';
 import userValidator from '../../validators/user';
 
-export default class UserService implements BaseService<User> {
+export default class UserService implements IBaseService<User> {
   async create(data: User): Promise<User> {
     try {
       userValidator(data);
