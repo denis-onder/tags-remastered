@@ -13,5 +13,9 @@ module.exports = {
   rules: {
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
+    'class-methods-use-this': 'off',
+    'no-useless-catch': 'off',
+    'no-useless-constructor': 'off',
+    'comma-dangle': 'off',
   },
 };

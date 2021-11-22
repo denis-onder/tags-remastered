@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import RequestError from '../utils/RequestError';
+import RequestError from '../errors/RequestError';
 
-export default function (
+export default (
   error: RequestError,
   _: Request,
   res: Response,
   next: NextFunction
-) {
+): void => {
   res.status(error.status).send(error.message);
   next();
-}
+};

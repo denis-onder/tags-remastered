@@ -1,5 +1,6 @@
 export default class RequestError {
   public status: number;
+
   public message: string;
 
   constructor(status: number, message: string) {
