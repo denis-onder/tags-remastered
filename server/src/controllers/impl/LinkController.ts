@@ -1,3 +1,5 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
 import { NextFunction, Response, Router } from 'express';
 import AuthorizedRequest from '../../domain/AuthorizedRequest';
 import Link from '../../domain/Link';
@@ -41,25 +43,18 @@ export default class LinkController implements IBaseController {
     next: NextFunction
   ): Promise<void> {
     try {
+      let payload: Link | Array<Link>;
+
+      const multiple = req.query.multiple === 'true';
       const query = this.formQuery(req);
-      const links: Array<Link> = await this.linkService.find(query);
 
-      res.status(200).json(links);
-    } catch (error) {
-      next(error);
-    }
-  }
+      if (multiple) {
+        payload = await this.linkService.find(query);
+      } else {
+        payload = await this.linkService.findOne(query);
+      }
 
-  async findOne(
-    req: AuthorizedRequest,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const query = this.formQuery(req);
-      const link: Link = await this.linkService.findOne(query);
-
-      res.status(200).json(link);
+      res.status(200).json(payload);
     } catch (error) {
       next(error);
     }
@@ -107,7 +102,7 @@ export default class LinkController implements IBaseController {
 
       await this.linkService.delete(id);
 
-      res.status(204);
+      res.status(204).send();
     } catch (error) {
       next(error);
     }

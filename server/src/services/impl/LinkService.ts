@@ -3,7 +3,6 @@ import IBaseService from '../IBaseService';
 import linkValidator from '../../validators/link';
 import LinkModel from '../../db/models/LinkModel';
 import ResourceNotFoundError from '../../errors/impl/ResourceNotFoundError';
-import BadRequestError from '../../errors/impl/BadRequestError';
 
 export default class LinkService implements IBaseService<Link> {
   async create(data: Link): Promise<Link> {
@@ -59,13 +58,17 @@ export default class LinkService implements IBaseService<Link> {
 
   async update(id: string, data: Partial<Link>): Promise<Link> {
     try {
-      const result = await LinkModel.findByIdAndUpdate(id, data);
+      linkValidator(data as Link);
 
-      if (!result) {
-        throw new BadRequestError('Invalid request. Please try again.');
+      const linkExists = await LinkModel.findByIdAndUpdate(id, data);
+
+      if (!linkExists) {
+        throw new ResourceNotFoundError();
       }
 
-      return result;
+      const updatedLink: Link = (await LinkModel.findById(id)) as Link;
+
+      return updatedLink;
     } catch (error) {
       throw error;
     }
