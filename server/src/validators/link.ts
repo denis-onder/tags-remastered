@@ -10,7 +10,7 @@ export default (link: Link): void => {
       // eslint-disable-next-line no-useless-escape
       /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
 
-    const trimmedUrl = link.url ? link.url.trim() : '3';
+    const trimmedUrl = link.url ? link.url.trim() : '';
     const trimmedTags = link.tags ? link.tags.filter((tag) => tag.trim()) : [];
 
     if (!trimmedUrl) {
