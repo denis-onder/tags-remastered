@@ -17,7 +17,7 @@ const getTokenCookie = (): string => {
   return cookies.token;
 };
 
-const baseURL = process.env.BASE_API_URL || 'http://localhost:6000';
+const baseURL = process.env.BASE_API_URL || 'http://localhost:8080';
 
 const baseAxios = axios.create({
   baseURL,
@@ -25,9 +25,6 @@ const baseAxios = axios.create({
 
 const authAxios = axios.create({
   baseURL: `${baseURL}/auth`,
-  headers: {
-    Authorization: getTokenCookie(),
-  },
 });
 
 const linksAxios = axios.create({

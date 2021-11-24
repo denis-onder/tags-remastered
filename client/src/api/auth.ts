@@ -17,7 +17,8 @@ const login = (email: string, password: string): Promise<void> => {
       email,
       password,
     })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .then((token) => localStorage.setItem('token', token));
 };
 
 export { register, login };

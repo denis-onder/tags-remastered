@@ -43,13 +43,7 @@ export default class AuthController {
 
       const token: string = await this.authService.login(credentials);
 
-      res
-        .status(200)
-        .cookie('token', token, {
-          expires: expirationDate,
-          httpOnly: true,
-        })
-        .send();
+      res.status(200).send(token);
     } catch (error) {
       next(error);
     }
