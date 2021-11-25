@@ -1,0 +1,17 @@
+.dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(#000, 0.3);
+  overflow: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &-card {
+    background-color: #fff;
+    padding: 1rem 2rem;
+  }
+}
