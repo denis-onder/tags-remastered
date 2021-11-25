@@ -11,14 +11,13 @@ const register = (data: User): Promise<User> => {
     .then((res) => res.data);
 };
 
-const login = (email: string, password: string): Promise<void> => {
+const login = (email: string, password: string): Promise<string> => {
   return authAxios
     .post('/login', {
       email,
       password,
     })
-    .then((res) => res.data)
-    .then((token) => localStorage.setItem('token', token));
+    .then((res) => res.data);
 };
 
 export { register, login };

@@ -10,7 +10,8 @@ export default function Login() {
 
   const onClick = async (): Promise<void> => {
     try {
-      await login(email as string, password as string);
+      const token = await login(email as string, password as string);
+      localStorage.setItem('token', token);
       navigate('/dashboard');
     } catch (error) {
       console.error(error);

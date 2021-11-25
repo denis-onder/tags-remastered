@@ -11,4 +11,8 @@ const getLinks = (multiple: boolean = true): Promise<Link[]> => {
     .then((res) => res.data);
 };
 
-export { getLinks };
+const deleteLink = (linkId: string): Promise<void> => {
+  return linksAxios.delete(`/${linkId}`).then((res) => res.data);
+};
+
+export { getLinks, deleteLink };

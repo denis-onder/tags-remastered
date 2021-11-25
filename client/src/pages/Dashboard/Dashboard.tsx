@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { getLinks } from '../../api/links';
 import LinkCard from '../../components/LinkCard/LinkCard';
 import Link from '../../domain/Link';
@@ -7,6 +8,7 @@ import './Dashboard.scss';
 
 export default function Dashboard() {
   const [links, setLinks] = useState<Link[]>([]);
+  const navigate = useNavigate();
 
   const fetchLinks = async (): Promise<void> => {
     let payload: Array<Link> = [];
@@ -14,7 +16,7 @@ export default function Dashboard() {
     try {
       payload = await getLinks(true);
     } catch (error) {
-      payload = [];
+      navigate('/login');
     } finally {
       setLinks(payload);
     }

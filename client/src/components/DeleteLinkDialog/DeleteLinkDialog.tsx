@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { deleteLink } from '../../api/links';
 import BaseDialog from '../BaseDialog/BaseDialog';
 import './DeleteLinkDialog.scss';
 
@@ -8,7 +9,9 @@ export default function DeleteLinkDialog({
   closeDialog,
 }: any) {
   const onConfirm = () => {
-    closeDialog();
+    deleteLink(linkId).finally(() => {
+      closeDialog();
+    });
   };
 
   const onCancel = () => {
