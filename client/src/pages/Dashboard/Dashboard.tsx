@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getLinks } from '../../api/links';
 import LinkCard from '../../components/LinkCard/LinkCard';
 import Link from '../../domain/Link';
+import AuthGuard from '../../guards/AuthGuard';
 import './Dashboard.scss';
 
 export default function Dashboard() {
@@ -24,13 +25,15 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="dashboard">
-      <h1 className="dashboard-title">Dashboard</h1>
-      <div className="dashboard-links">
-        {links.map((link) => (
-          <LinkCard key={link._id} link={link} />
-        ))}
+    <AuthGuard>
+      <div className="dashboard">
+        <h1 className="dashboard-title">Dashboard</h1>
+        <div className="dashboard-links">
+          {links.map((link) => (
+            <LinkCard key={link._id} link={link} />
+          ))}
+        </div>
       </div>
-    </div>
+    </AuthGuard>
   );
 }
