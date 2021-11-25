@@ -1,0 +1,41 @@
+.link-card {
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 3px;
+  box-shadow: 0 2px 7px 0 #888;
+  &-title {
+    margin-top: 0;
+  }
+  &-tags,
+  &-actions {
+    display: flex;
+    align-items: center;
+  }
+  &-tags {
+    flex-direction: row;
+    &-chip {
+      background-color: #ccc;
+      padding: 8px;
+      border-radius: 8px;
+    }
+  }
+  &-actions {
+    flex-direction: row-reverse;
+    &-button {
+      margin: 0 4px;
+      padding: 8px;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      outline: 0;
+      border: 0;
+      box-shadow: 0 2px 7px 0 #888;
+      &--edit {
+        background-color: rgb(41, 41, 255);
+      }
+      &--delete {
+        background-color: rgb(255, 41, 41);
+      }
+    }
+  }
+}
