@@ -3,11 +3,17 @@ import { deleteLink } from '../../api/links';
 import BaseDialog from '../BaseDialog/BaseDialog';
 import './DeleteLinkDialog.scss';
 
+interface DeleteLinkDialogProps {
+  linkId: string;
+  showDialog: boolean;
+  closeDialog: () => void;
+}
+
 export default function DeleteLinkDialog({
   linkId,
   showDialog,
   closeDialog,
-}: any) {
+}: DeleteLinkDialogProps) {
   const onConfirm = () => {
     deleteLink(linkId).finally(() => {
       closeDialog();

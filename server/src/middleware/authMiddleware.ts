@@ -36,6 +36,7 @@ export default async (
       throw new UnauthorizedError();
     }
   } catch (error: any) {
+    // Send a set-cookie header to override the existing token to null
     res.status(error.status).send(error.message);
   }
 };

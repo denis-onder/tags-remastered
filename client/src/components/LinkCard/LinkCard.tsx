@@ -1,11 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import Link from '../../domain/Link';
 import DeleteLinkDialog from '../DeleteLinkDialog/DeleteLinkDialog';
+import EditLinkDialog from '../EditLinkCard/EditLinkDialog';
 import './LinkCard.scss';
 
 export default function LinkCard(props: { link: Link }) {
   const { link } = props;
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
 
   return (
     <Fragment>
@@ -25,7 +27,10 @@ export default function LinkCard(props: { link: Link }) {
           >
             Delete
           </button>
-          <button className="link-card-actions-button link-card-actions-button--edit">
+          <button
+            className="link-card-actions-button link-card-actions-button--edit"
+            onClick={() => setShowEditDialog(true)}
+          >
             Edit
           </button>
         </section>
@@ -34,6 +39,11 @@ export default function LinkCard(props: { link: Link }) {
         linkId={link._id}
         showDialog={showDeleteDialog}
         closeDialog={() => setShowDeleteDialog(false)}
+      />
+      <EditLinkDialog
+        link={link}
+        showDialog={showEditDialog}
+        closeDialog={() => setShowEditDialog(false)}
       />
     </Fragment>
   );

@@ -1,7 +1,11 @@
 import React from 'react';
 import './BaseDialog.scss';
 
-export default function BaseDialog({ children }: any) {
+interface BaseDialogProps {
+  children: JSX.Element | Array<JSX.Element>;
+}
+
+export default function BaseDialog({ children }: BaseDialogProps) {
   return (
     <div className="dialog">
       <div className="dialog-card">{children}</div>
